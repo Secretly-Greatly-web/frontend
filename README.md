@@ -1,40 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Secretly Greatly - Frontend
 
-## Convention
+이 프로젝트는 웹 브라우저 상에서 Visual Studio Code의 독특한 디자인 감성, 레이아웃 구조, 테마 컬러 및 정밀한 인터랙션 패턴을 재현한 웹 기반 IDE 개발자 대시보드 프론트엔드 서비스입니다.
 
-- [Naming Convention](./docs/namingConvention.md)
+---
 
-## Getting Started
+## 기술 스택 (Tech Stack)
 
-First, run the development server:
+- **Framework**: Next.js (App Router)
+- **Library**: React
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand
+- **Data Fetching**: Axios, React Query
+- **Chart**: Lightweight Charts (주식 시세 차트 렌더링)
+- **Real-time**: socket.io-client
+- **Testing**: Vitest, MSW (Mock Service Worker)
 
+---
+
+## 핵심 기능 (Core Features)
+
+이 프로젝트는 직장이나 공공장소에서 남들의 눈을 피해 은밀하게 트레이딩과 시장 동향을 파악할 수 있도록 **VS Code 개발 툴로 위장한 Stealth Trading Dashboard**입니다.
+
+### 1. 위장형 실시간 주식 토론방
+- **UI 위장**: 외관상 개발자용 AI 코딩 어시스턴트(Claude Code 등)와 대화하는 것처럼 보이지만, 실제로는 실시간 주식 토론방입니다.
+- **실시간 소켓 통신**: 백엔드 소켓 게이트웨이와 연결되어 주식 티커별 독립 채널에 접속하고 실시간으로 메시지를 송수신합니다.
+- **도배 방지 및 블라인드**: 도배 감지 시 10초간 전송이 제한되며, 누적 5회 이상 신고된 메시지는 실시간으로 블라인드 처리됩니다.
+
+### 2. 실시간 주가 급변 감지 및 알림 센터 연동
+- **위장형 에러 알림**: 빌드 에러나 시스템 경고처럼 보이지만, 실제로는 보유 자산이나 관심 종목의 급격한 주가 변동을 알리는 위장 경고 시스템입니다.
+- **실시간 알림 푸시**: 백엔드 감시 스케줄러가 주가 급변을 감지하면 소켓 푸시를 통해 즉시 프론트엔드로 전송하며, 이는 알림 센터에 자동으로 저장됩니다.
+
+### 3. 평단가 물타기 시뮬레이터 및 빌드 로그 위장
+- **빌드 로그 위장**: 하단 터미널 영역에 주식 추가 매수(물타기)에 따른 연산 결과가 마치 개발 소스 코드 빌드 로그나 컴파일 로그처럼 표시됩니다.
+- **7대 지표 보정 연산**: 추가 매수하고자 하는 수량과 평단가를 입력하면 백엔드 API를 통해 자산 배분 7대 선행 지표 보정 연산을 수행하고 결과를 안전하게 보관합니다.
+
+### 4. 에디터 최하단 상태 표시줄 위장 선행지표
+- **개발 환경 정보 위장**: VS Code 하단 상태 표시줄의 브랜치 이름이나 린트 상태 정보처럼 보이지만, 실제로는 종합 주가 지수 및 주요 환율 정보입니다.
+- **초고속 캐싱**: 한국투자증권 데이터 파이프라인에서 가공된 최신 마켓 인디케이터 지표 데이터를 실시간으로 조회하여 렌더링합니다.
+
+### 5. 실시간 차트 및 KIS 데이터 연동
+- **캔들 차트 렌더링**: TradingView의 차트 엔진 라이브러리를 활용해 스무스한 캔들차트 드래그 및 실시간 틱 데이터 가시화를 구현했습니다.
+- **자동 수집 파이프라인**: 백엔드가 한국투자증권 API로부터 주기적으로 수집 및 정제한 캔들 데이터를 API로 요청해 와 실시간으로 렌더링합니다.
+
+### 6. 관심 종목 스프레드시트 및 시세 리프레시
+- **엑셀식 다중 호가판**: 여러 관심 종목을 컴팩트한 스프레드시트(엑셀) 스타일의 그리드판에 표출합니다.
+- **회원/비회원 스마트 이중화**: 로그인 세션에 따라 서버 DB의 워치리스트에 영속 저장되거나, 비로그인 상태일 때는 브라우저 로컬 스토리지를 데이터 소스로 자동 스위칭합니다.
+
+### 7. 실시간 이종 통화 환율 계산 엔진
+- **원화/달러 자동 환산**: 버튼 클릭 한 번으로 모든 주가 표기 및 손익 평가 금액을 KRW ↔ USD로 즉각 상호 전환합니다.
+- **환율 프록시**: 백엔드가 실시간 환율 API를 중계하여 최신 환율 정보를 프론트엔드 전역 상태에 캐싱해 제공합니다.
+
+### 8. 파일 및 주식 종목 고속 검색
+- **명령 팔레트 검색**: VS Code 단축키 `Cmd+P`를 활성화하여, 입력창 하나로 로컬 개발 프로젝트의 소스 파일뿐만 아니라, 주식 종목을 신속하게 검색하고 바로 열 수 있습니다.
+
+---
+
+## 아키텍처 및 폴더 구조 (FSD)
+
+프로젝트 유지보수성과 확장성을 극대화하기 위해 **FSD (Feature-Sliced Design)** 구조를 기반으로 설계되었습니다.
+
+- **`app/`**: 애플리케이션의 엔트리 포인트, 라우팅 및 전역 스타일 정의
+- **`views/`**: 페이지 수준의 레이아웃 조립 (메인 IDE 프레임 쉘)
+- **`widgets/`**: 독립적으로 기능하는 큰 단위의 컴포넌트 블록 (타이틀바, 에디터 영역, 상태바, 터미널 등)
+- **`features/`**: 비즈니스 로직과 API 통신을 담당하는 기능 단위 (인증, 뉴스, 환율, 채팅 소켓 등)
+- **`entities/`**: 특정 도메인의 데이터 타입 및 데이터 조작을 전담하는 비즈니스 실체 모델
+- **`shared/`**: 전체 프로젝트에서 공용으로 재사용되는 유틸 및 UI 컴포넌트 (공통 API 클라이언트, UI 라이브러리 등)
+
+---
+
+## API 연동 및 통신 흐름
+
+- **인증 토큰 자동 주입**: API 클라이언트 내부의 Interceptor가 모든 요청 헤더에 자동으로 Bearer JWT 토큰을 실어 전송합니다.
+- **전역 자동 로그아웃**: 요청 처리 중 토큰 만료 등으로 인해 `401 Unauthorized` 에러가 수신되면 세션을 강제 정리하고 로그인 창으로 유도합니다.
+- **뉴스 요약 프록시**: 프론트엔드가 백엔드 API를 호출하면 백엔드 프록시 엔진을 통해 뉴스 요약 서비스의 데이터를 안전하게 리턴받아 화면에 노출합니다.
+
+---
+
+## 디자인 시스템 및 테마 가이드
+
+본 프로젝트는 VS Code의 최신 표준 다크 테마인 **Dark 2026**을 모태로 삼고 있습니다.
+
+- **색상 테마**: CSS 변수들을 참조하여 UI를 작성하며, 에디터 영역은 주변 크롬(사이드바, 타이틀바 등)보다 명도가 더 낮게 디자인되어 코딩 화면 집중도를 높입니다.
+- **액센트 컬러**: 포커스 영역과 탭 상단 라인에는 VS Code 특유의 틸/시안 컬러를 활용해 아이덴티티를 살렸습니다.
+
+---
+
+## 개발 설정 및 실행 방법
+
+### 1. 의존성 설치
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. 로컬 환경 변수 설정
+`frontend` 루트 폴더 내에 `.env.local` 파일을 만들고 아래 변수를 지정합니다.
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. 개발 서버 기동 (Port: 3001)
+```bash
+pnpm dev
+```
+브라우저에서 [http://localhost:3001](http://localhost:3001)로 접속합니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. 기타 스크립트 명령어
+- 빌드: `pnpm build`
+- 린트 검사: `pnpm lint`
+- 테스트(Vitest): `pnpm test`
